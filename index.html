@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,
+maximum-scale=1, user-scalable=0">
+<script type='text/javascript'>
+function onBodyLoaded() {
+  function toggleInert(disabled) {
+    let bodyElem = document.getElementById("body-content");
+     if(bodyElem) {
+       bodyElem.inert = disabled;
+     }
+   }
+   // Add hooks to toggle inert on our page when Embedded Chat
+   // changes state.
+   function addA11yHooks() {
+   embedded_svc.addEventHandler('afterMaximize', function() {
+   toggleInert(true);
+   });
+   embedded_svc.addEventHandler('afterDestroy', function() {
+   toggleInert(false);
+   });
+   embedded_svc.addEventHandler('afterMinimize', function() {
+   toggleInert(false);
+   });
+}
+// Early out for desktop.
+if(embedded_svc.isDesktop()) {
+return;
+}
+// Add hooks for mobile.
+addA11yHooks();
+}
+
+Embedded Service for Web Developer Guide Expand the Pre-Chat Stage
+</script>
+</head>
+<body onload="onBodyLoaded()">
+<div id="body-content">
+<h1>Welcome to the best website!</h1>
+<style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #000000;
+		font-family: "Times New Roman", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #000000;
+	}
+</style>
+
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://raghuengineeringcollege33-dev-ed.my.salesforce.com',
+			'https://etgdigital123-developer-edition.ap24.force.com/chartvisualforce',
+			gslbBaseURL,
+			'00D5g000005Hdc9',
+			'livechat0146',
+			{
+				baseLiveAgentContentURL: 'https://c.la2-c1-hnd.salesforceliveagent.com/content',
+				deploymentId: '5725g000000Xzs4',
+				buttonId: '5735g000000Y3N4',
+				baseLiveAgentURL: 'https://d.la2-c1-hnd.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'livechat0146',
+				isOfflineSupportEnabled: true
+			}
+		);
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://raghuengineeringcollege33-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+</body>
+</html>
